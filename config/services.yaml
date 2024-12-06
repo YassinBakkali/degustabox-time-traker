@@ -20,5 +20,24 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Shared\:
+        resource: '../src/Shared/*'
+        public: false
+
+    _instanceof:
+        App\Shared\Domain\Bus\Command\CommandHandler:
+            tags: ['app.command_handler']
+
+        App\Shared\Domain\Bus\Query\QueryHandler:
+            tags: ['app.query_handler']
+
+
+    App\Shared\Infrastructure\Bus\Query\InMemorySymfonyQueryBus:
+        arguments: [ !tagged app.query_handler ]
+
+    App\Shared\Infrastructure\Bus\Command\InMemorySymfonyCommandBus:
+        arguments: [ !tagged app.command_handler ]
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
