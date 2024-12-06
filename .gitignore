@@ -1,0 +1,25 @@
+# Ignorar directorios específicos de Symfony
+/var/
+/vendor/
+
+# Ignorar configuraciones de entorno de desarrollo
+/.idea/
+/.vscode/
+/.DS_Store
+Thumbs.db
+
+# Ignorar archivos temporales generados por Symfony
+/.env.local
+/.env.*.local
+/var/cache/
+/var/log/
+/var/sessions/
+
+# Ignorar archivos generados por Composer
+/composer.phar
+/composer.lock
+
+# Ignorar archivos de configuración de Docker (si no necesitas compartirlos)
+docker-compose.override.yml
+*.log
+

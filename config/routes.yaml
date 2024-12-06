@@ -1,0 +1,4 @@
+task:
+    resource: "../src/Task/Infrastructure/Controller/"
+    type: attribute
+
