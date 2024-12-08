@@ -12,7 +12,8 @@ use Doctrine\ORM\EntityRepository;
 class DoctrineTaskRepository implements TaskRepository
 {
     private EntityManagerInterface $entityManager;
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
 
@@ -27,8 +28,9 @@ class DoctrineTaskRepository implements TaskRepository
         $this->entityManager->flush();
     }
 
-    public function findById(int $id): ?Task {
-        return $this->getEntityRepository()->find($id);
+    public function findById(int $id): ?Task
+    {
+        return $this->getEntityRepository()->findOneBy(['id' => $id]);
     }
 
     public function findAll(): array

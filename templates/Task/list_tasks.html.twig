@@ -1,5 +1,84 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Hola Mundo!</h1>
+    <h1>Tareas</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Creado en</th>
+            <th>Última actualización</th>
+            <th>Tiempo transcurrido</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td><a href="{{ path('detail_task', { id: task.id }) }}">{{ task.title }}</a></td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.createdAt|date('Y-m-d H:i:s') }}</td>
+                    <td>
+                        {% if task.updatedAt %}
+                            {{ task.updatedAt|date('Y-m-d H:i:s') }}
+                        {% else %}
+                            No actualizado
+                        {% endif %}
+                    </td>
+                    <td>{{ task.elapsedTimeFormatted }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        h1 {
+            color: #3497d9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #e9dbff;
+            color: #333;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        tr:nth-child(even) {
+            background-color: #e9dbff;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        td {
+            color: #555;
+            font-size: 14px;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .empty-table {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
+    </style>
 {% endblock %}

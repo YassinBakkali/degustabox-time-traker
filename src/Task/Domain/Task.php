@@ -18,7 +18,6 @@ class Task
         $this->title = $title;
         $this->description = $description;
         $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
     }
 
     public function getId(): int

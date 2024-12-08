@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}Detalle de la Tarea{% endblock %}
+
+{% block body %}
+
+    <h1>Detalle de la Tarea</h1>
+    <div class="task-detail">
+        <p><span class="label">ID:</span> {{ task.id }}</p>
+        <p><span class="label">Título:</span> {{ task.title }}</p>
+        <p><span class="label">Descripción:</span> {{ task.description }}</p>
+        <p><span class="label">Fecha de Creación:</span> {{ task.createdAt|date('Y-m-d H:i:s') }}</p>
+        <p>
+            <span class="label">Tiempo Transcurrido: {{ task.elapsedTimeFormatted }}</span>
+        </p>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #3497d9;
+        }
+        .task-detail {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .task-detail p {
+            margin: 10px 0;
+        }
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+{% endblock %}
