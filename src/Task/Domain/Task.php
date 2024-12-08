@@ -13,7 +13,7 @@ class Task
     private \DateTime $updatedAt;
     private int $elapsedTime = 0;
 
-    public function __construct(string $title, string $description)
+    public function __construct(string $title = '', string $description = '')
     {
         $this->title = $title;
         $this->description = $description;

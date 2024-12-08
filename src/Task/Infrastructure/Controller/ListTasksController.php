@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ListTasksController extends AbstractController
 {
     #[Route('/tasks', name: 'tasks_index')]
-    public function index(CommandBus $commandBus, QueryBus $queryBus): Response
+    public function index(QueryBus $queryBus): Response
     {
 
 

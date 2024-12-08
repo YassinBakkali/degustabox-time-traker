@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Nueva Tarea{% endblock %}
+{% block body %}
+    <h1>Crear Tarea</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.save) }}
+    {{ form_end(form) }}
+{% endblock %}
