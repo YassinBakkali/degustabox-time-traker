@@ -19,7 +19,7 @@ doctrine:
             Task:
                 type: xml
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Task/Domain'
+                dir: '%kernel.project_dir%/src/Task/Infrastructure/Persistence/Doctrine'
                 prefix: 'App\Task\Domain'
                 alias: Task
 
