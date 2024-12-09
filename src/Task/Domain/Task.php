@@ -12,13 +12,14 @@ class Task
     private \DateTime $createdAt;
     private \DateTime|null $updatedAt;
     private int $elapsedTime = 0;
+    private int $elapsedTimeToday = 0;
 
     public function __construct(string $title = '', string $description = '')
     {
         $this->title = $title;
         $this->description = $description;
         $this->createdAt = new \DateTime();
-        $this->updatedAt = null;
+        $this->updatedAt = new \DateTime();
     }
 
     public function getId(): int
@@ -79,6 +80,16 @@ class Task
     public function setElapsedTime(int $elapsedTime): void
     {
         $this->elapsedTime = $elapsedTime;
+    }
+
+    public function getElapsedTimeToday(): int
+    {
+        return $this->elapsedTimeToday;
+    }
+
+    public function setElapsedTimeToday(int $elapsedTimeToday): void
+    {
+        $this->elapsedTimeToday = $elapsedTimeToday;
     }
 
 }

@@ -2,28 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Task\Application\All;
+namespace App\Task\Application\Find;
 
 use App\Task\Domain\Responses\TaskResponse;
-use App\Task\Domain\Responses\TasksResponseCollection;
 use App\Task\Domain\TaskRepository;
 
 
-class AllTasksFinder
+class FindTaskByTitleFinder
 {
     public function __construct(private readonly TaskRepository $repository)
     {}
 
-    public function __invoke(): TasksResponseCollection
+    public function __invoke(string $title): TaskResponse
     {
-        $tasks = $this->repository->findAll();
-
-        $taskResponses= [];
-        foreach ($tasks as $task) {
-            $taskResponses[] = $this->convertToResponse($task);
-        }
-
-        return TasksResponseCollection::create($taskResponses);
+        $task = $this->repository->findByTitle($title);
+        return $this->convertToResponse($task);
     }
 
     private function convertToResponse($task): TaskResponse
@@ -35,7 +28,7 @@ class AllTasksFinder
             $task->getCreatedAt(),
             $task->getUpdatedAt(),
             $task->getElapsedTime(),
-            $task->getElapsedTimeToday()
+            $task->getElapsedTimeToday(),
         );
     }
 }

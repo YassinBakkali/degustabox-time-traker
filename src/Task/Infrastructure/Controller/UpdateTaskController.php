@@ -15,8 +15,9 @@ class UpdateTaskController extends AbstractController
     public function update(int $id, Request $request, CommandBus $commandBus): JsonResponse
     {
         $accumulatedSeconds = $request->request->get('accumulatedSeconds');
+        $accumulatedSecondsToday = $request->request->get('accumulatedSecondsToday');
         $commandBus->dispatch(
-            new UpdateTaskCommand($id, null,null, $accumulatedSeconds)
+            new UpdateTaskCommand($id, null,null, $accumulatedSeconds, $accumulatedSecondsToday)
         );
 
         return new JsonResponse(['status' => 'success']);

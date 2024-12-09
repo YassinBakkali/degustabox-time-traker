@@ -11,8 +11,13 @@
         <field name="title" type="string"/>
         <field name="description" type="string"/>
         <field name="createdAt" type="datetime"/>
-        <field name="updatedAt" type="datetime" nullable="true"/>
+        <field name="updatedAt" type="datetime"/>
         <field name="elapsedTime" type="integer"/>
+        <field name="elapsedTimeToday" type="integer"/>
+
+        <unique-constraints>
+            <unique-constraint name="unique_title" columns="title" />
+        </unique-constraints>
     </entity>
 
 </doctrine-mapping>

@@ -13,6 +13,6 @@ class NewTaskCommandHandler implements CommandHandler
     ){}
 
     public function __invoke(NewTaskCommand $command): void {
-        $this->newTask->__invoke($command->getTitle(), $command->getDescription());
+        $this->newTask->__invoke($command->getTitle());
     }
 }

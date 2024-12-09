@@ -13,8 +13,8 @@ class NewTask
         private readonly TaskRepository $repository
     ) {}
 
-    public function __invoke(string $title, string $description): void
+    public function __invoke(string $title): void
     {
-        $this->repository->save(new Task($title, $description));
+        $this->repository->save(new Task($title));
     }
 }

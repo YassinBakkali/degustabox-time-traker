@@ -21,7 +21,8 @@ class UpdateTaskCommandHandler implements CommandHandler
                 $command->getId(),
                 $command->getTitle(),
                 $command->getDescription(),
-                $command->getElapsedTime()
+                $command->getElapsedTime(),
+                $command->getElapsedTimeToday()
             );
     }
 

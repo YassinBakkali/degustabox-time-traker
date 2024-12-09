@@ -13,6 +13,7 @@ class TaskResponse implements Response {
     private \DateTime $createdAt;
     private \DateTime|null $updatedAt;
     private int $elapsedTime;
+    private int $elapsedTimeToday;
 
     public static function create(
         int $id,
@@ -20,7 +21,8 @@ class TaskResponse implements Response {
         string $description,
         \DateTime $createdAt,
         \DateTime|null $updatedAt,
-        int $elapsedTime
+        int $elapsedTime,
+        int $elapsedTimeToday
     ): self {
         return (new self())
             ->setId($id)
@@ -29,6 +31,7 @@ class TaskResponse implements Response {
             ->setCreatedAt($createdAt)
             ->setUpdatedAt($updatedAt)
             ->setElapsedTime($elapsedTime)
+            ->setElapsedTimeToday($elapsedTimeToday);
             ;
     }
     public function getId(): int
@@ -95,6 +98,18 @@ class TaskResponse implements Response {
         $this->elapsedTime = $elapsedTime;
         return $this;
     }
+
+    public function getElapsedTimeToday(): int
+    {
+        return $this->elapsedTimeToday;
+    }
+
+    public function setElapsedTimeToday(int $elapsedTimeToday): TaskResponse
+    {
+        $this->elapsedTimeToday = $elapsedTimeToday;
+        return $this;
+    }
+
     public function getElapsedTimeFormatted(): string {
         $hours = intdiv($this->getElapsedTime(), 3600);
         $minutes = intdiv($this->getElapsedTime() % 3600, 60);
@@ -103,4 +118,11 @@ class TaskResponse implements Response {
         return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
     }
 
+    public function getElapsedTimeTodayFormatted(): string {
+        $hours = intdiv($this->getElapsedTimeToday(), 3600);
+        $minutes = intdiv($this->getElapsedTimeToday() % 3600, 60);
+        $seconds = $this->getElapsedTimeToday() % 60;
+
+        return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+    }
 }

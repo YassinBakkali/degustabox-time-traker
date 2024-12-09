@@ -9,18 +9,18 @@
         <thead>
         <tr>
             <th>Título</th>
-            <th>Descripción</th>
-            <th>Creado en</th>
-            <th>Tiempo transcurrido</th>
+            <th>Creado el</th>
+            <th class="text-center" >Tiempo transcurrido</th>
+            <th class="text-center">Tiempo trabajado hoy</th>
         </tr>
         </thead>
         <tbody>
             {% for task in tasks %}
                 <tr>
                     <td><a href="{{ path('detail_task', { id: task.id }) }}">{{ task.title }}</a></td>
-                    <td> <span class="description-task">{{ task.description }}</span></td>
                     <td>{{ task.createdAt|date('d/m/Y') }}</td>
-                    <td>{{ task.elapsedTimeFormatted }}</td>
+                    <td class="text-center">{{ task.elapsedTimeFormatted }}</td>
+                    <td class="text-center">{{ task.elapsedTimeTodayFormatted }}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -39,6 +39,9 @@
         a {
             text-decoration: none;
             color: inherit;
+        }
+        .text-center {
+            text-align: center;
         }
         .header-container {
             display: flex;
@@ -72,12 +75,6 @@
             text-align: left;
             font-size: 30px;
             border-bottom: 1px solid #ddd;
-        }
-        .description-task {
-            display: -webkit-box;
-            overflow: hidden;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
         }
         th {
             background-color: #3497d9;

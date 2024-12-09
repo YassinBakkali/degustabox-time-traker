@@ -27,7 +27,8 @@ class TaskDetailFinder
             $task->getDescription(),
             $task->getCreatedAt(),
             $task->getUpdatedAt(),
-            $task->getElapsedTime()
+            $task->getElapsedTime(),
+            $task->getElapsedTimeToday(),
         );
     }
 }

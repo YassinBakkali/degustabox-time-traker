@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %}Detalle de la Tarea{% endblock %}
+{% set acumuladoHoy = (task.updatedAt|date('d/m/Y') == "now"|date('d/m/Y')) ? task.elapsedTimeToday : 0 %}
+
 
 {% block body %}
-
-    <h1>Detalle de la Tarea</h1>
+    <div class="header-container">
+        <div><a href="{{ path('tasks_index') }}"><i class="fa-solid fa-angle-left"></i></a></div>
+        <h1>Detalle de la Tarea</h1>
+    </div>
     <div class="detail-container">
         <div class="chronometer-container">
             <div class="time" id="time">
@@ -17,7 +21,7 @@
         <div class="task-detail">
             <p><span class="label">Título:</span> {{ task.title }}</p>
             <p><span class="label">Creado:</span> {{ task.createdAt|date('d/m/Y') }}</p>
-            <p ><span class="label">Descripción:</span> <br>{{ task.description }}</p>
+            <p><span class="label">Tiempo trabajado hoy:</span> <span id="accumulatedTimeToday">{{ task.elapsedTimeTodayFormatted }}</span></p>
         </div>
     </div>
 {% endblock %}
@@ -27,14 +31,18 @@
         let cronometrar = false;
         let tiempoRef =  Date.now();
         let acumulado = {% if task.elapsedTime %} {{ task.elapsedTime }} * 1000 {% else %} 0 {% endif %};
+        let acumuladoHoy = {{ acumuladoHoy }} * 1000;
 
         setInterval( () => {
             const tiempo = document.getElementById('time');
+            const tiempoAcumuladoHoy = document.getElementById('accumulatedTimeToday')
             if (cronometrar) {
                 acumulado += Date.now() - tiempoRef;
+                acumuladoHoy += Date.now() - tiempoRef;
             }
             tiempoRef = Date.now();
             tiempo.innerHTML = formatearS(acumulado/1000);
+            tiempoAcumuladoHoy.innerHTML = formatearS(acumuladoHoy/1000);
         }, 1000)
 
         function formatearS (S) {
@@ -63,7 +71,8 @@
                 url: '{{ path('update_task', {'id': task.id}) }}',
                 type: 'POST',
                 data: {
-                    accumulatedSeconds: (acumulado/1000)
+                    accumulatedSeconds: (acumulado/1000),
+                    accumulatedSecondsToday: (acumuladoHoy/1000)
                 },
                 success: function (data) {
                     if (data.status === 'success') {
@@ -88,10 +97,23 @@
             margin: 20px;
             color: #333;
         }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 80%;
+            margin: auto;
+        }
+
+        .header-container i{
+            color: #3497d9;
+            font-size: 50px;
+        }
         h1 {
             color: #3497d9;
             text-align: center;
             font-size: 70px;
+            width: 100%;
         }
         .detail-container {
             background-color: #f8f8f8;
@@ -136,6 +158,9 @@
 
         .time {
             font-size: 150px;
+            color: #555555;
+        }
+        #accumulatedTimeToday {
             color: #555555;
         }
     </style>

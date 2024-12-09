@@ -8,4 +8,5 @@ interface TaskRepository {
     public function save(Task $task): void;
     public function findAll(): array;
     public function findById(int $id): ?Task;
+    public function findByTitle(string $title): ?Task;
 }

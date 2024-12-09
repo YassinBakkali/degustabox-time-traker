@@ -37,4 +37,9 @@ class DoctrineTaskRepository implements TaskRepository
     {
         return $this->getEntityRepository()->findAll();
     }
+
+    public function findByTitle(string $title): ?Task
+    {
+        return $this->getEntityRepository()->findOneBy(['title' => $title]);
+    }
 }
