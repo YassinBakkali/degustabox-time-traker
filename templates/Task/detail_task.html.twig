@@ -4,15 +4,80 @@
 {% block body %}
 
     <h1>Detalle de la Tarea</h1>
-    <div class="task-detail">
-        <p><span class="label">ID:</span> {{ task.id }}</p>
-        <p><span class="label">Título:</span> {{ task.title }}</p>
-        <p><span class="label">Descripción:</span> {{ task.description }}</p>
-        <p><span class="label">Fecha de Creación:</span> {{ task.createdAt|date('Y-m-d H:i:s') }}</p>
-        <p>
-            <span class="label">Tiempo Transcurrido: {{ task.elapsedTimeFormatted }}</span>
-        </p>
+    <div class="detail-container">
+        <div class="chronometer-container">
+            <div class="time" id="time">
+                <span>{{ task.elapsedTimeFormatted }}</span>
+            </div>
+            <div class="buttons-contianer">
+                <div class="btn btn-start" onclick="iniciar()"><i class="fa-duotone fa-solid fa-play"></i></div>
+                <div class="btn btn-pause" onclick="pausar()"><i class="fa-solid fa-stop"></i></div>
+            </div>
+        </div>
+        <div class="task-detail">
+            <p><span class="label">Título:</span> {{ task.title }}</p>
+            <p><span class="label">Creado:</span> {{ task.createdAt|date('d/m/Y') }}</p>
+            <p ><span class="label">Descripción:</span> <br>{{ task.description }}</p>
+        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let cronometrar = false;
+        let tiempoRef =  Date.now();
+        let acumulado = {% if task.elapsedTime %} {{ task.elapsedTime }} * 1000 {% else %} 0 {% endif %};
+
+        setInterval( () => {
+            const tiempo = document.getElementById('time');
+            if (cronometrar) {
+                acumulado += Date.now() - tiempoRef;
+            }
+            tiempoRef = Date.now();
+            tiempo.innerHTML = formatearS(acumulado/1000);
+        }, 1000)
+
+        function formatearS (S) {
+            let H = Math.floor(S / 3600);
+            let M = Math.floor((S % 3600) / 60);
+            let S_restante = Math.floor(S % 60);
+
+            let H_formateado = String(H).padStart(2, '0');
+            let M_formateado = String(M).padStart(2, '0');
+            let S_formateado = String(S_restante).padStart(2, '0');
+
+            return `${H_formateado}:${M_formateado}:${S_formateado}`;
+        }
+
+        function pausar() {
+            cronometrar = false;
+            enviarTiempoAcumulado();
+        }
+
+        function iniciar() {
+            cronometrar = true;
+        }
+
+        function enviarTiempoAcumulado() {
+            $.ajax({
+                url: '{{ path('update_task', {'id': task.id}) }}',
+                type: 'POST',
+                data: {
+                    accumulatedSeconds: (acumulado/1000)
+                },
+                success: function (data) {
+                    if (data.status === 'success') {
+                        console.log('Tarea actualizada correctamente');
+                    } else {
+                        console.error('Error al actualizar la tarea');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+    </script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -25,20 +90,53 @@
         }
         h1 {
             color: #3497d9;
+            text-align: center;
+            font-size: 70px;
+        }
+        .detail-container {
+            background-color: #f8f8f8;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 80%;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            flex-direction: column;
+            align-items: center;
         }
         .task-detail {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 600px;
-            margin: 0 auto;
+            margin-left: 30px;
         }
         .task-detail p {
             margin: 10px 0;
+            font-size: 33px;
         }
         .label {
             font-weight: bold;
             color: #555;
+        }
+        .chronometer-container {
+            border-radius: 20px;
+            background-color: #ececec;
+            padding: 10px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .buttons-contianer {
+            display: flex;
+            width: 75%;
+            justify-content: space-around;
+        }
+        .btn{
+            cursor: pointer;
+            font-size: 100px;
+        }
+
+        .time {
+            font-size: 150px;
+            color: #555555;
         }
     </style>
 {% endblock %}

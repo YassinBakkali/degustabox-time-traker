@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Tareas</h1>
+    <div class="header-container">
+        <div class="title"><span>Tareas</span></div>
+        <div class="new-btn"><a href="{{ path('new_task') }}"><span>Nueva tarea +</span></a></div>
+    </div>
     <table>
         <thead>
         <tr>
             <th>Título</th>
             <th>Descripción</th>
             <th>Creado en</th>
-            <th>Última actualización</th>
             <th>Tiempo transcurrido</th>
         </tr>
         </thead>
@@ -16,15 +18,8 @@
             {% for task in tasks %}
                 <tr>
                     <td><a href="{{ path('detail_task', { id: task.id }) }}">{{ task.title }}</a></td>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.createdAt|date('Y-m-d H:i:s') }}</td>
-                    <td>
-                        {% if task.updatedAt %}
-                            {{ task.updatedAt|date('Y-m-d H:i:s') }}
-                        {% else %}
-                            No actualizado
-                        {% endif %}
-                    </td>
+                    <td> <span class="description-task">{{ task.description }}</span></td>
+                    <td>{{ task.createdAt|date('d/m/Y') }}</td>
                     <td>{{ task.elapsedTimeFormatted }}</td>
                 </tr>
             {% endfor %}
@@ -34,51 +29,87 @@
 
 {% block stylesheets %}
     <style>
-        h1 {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .new-btn {
+            cursor: pointer;
+            font-size: 40px;
+            margin-bottom: 10px;
             color: #3497d9;
+        }
+        .title {
+            color: #3497d9;
+            text-align: center;
+            font-size: 70px;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
+            margin: 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-collapse: collapse;
-            margin: 20px 0;
-            font-family: Arial, sans-serif;
         }
         th, td {
-            padding: 12px 15px;
+            padding: 15px;
             text-align: left;
+            font-size: 30px;
             border-bottom: 1px solid #ddd;
         }
-        th {
-            background-color: #e9dbff;
-            color: #333;
-            font-weight: bold;
-            font-size: 16px;
+        .description-task {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
         }
-        tr:nth-child(even) {
-            background-color: #e9dbff;
+        th {
+            background-color: #3497d9;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
         }
         tr:hover {
             background-color: #f1f1f1;
         }
         td {
             color: #555;
-            font-size: 14px;
         }
         button {
-            padding: 8px 12px;
             background-color: #007BFF;
-            border: none;
             color: white;
-            border-radius: 4px;
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
             cursor: pointer;
+            width: 100%; /* Botón ocupa el ancho completo */
+            box-sizing: border-box;
+            margin-top: 20px;
         }
         button:hover {
             background-color: #0056b3;
         }
-        .empty-table {
-            text-align: center;
-            font-style: italic;
-            color: #777;
-        }
     </style>
 {% endblock %}
+
+
+

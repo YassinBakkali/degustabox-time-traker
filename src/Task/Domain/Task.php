@@ -10,7 +10,7 @@ class Task
     private string $title;
     private string $description;
     private \DateTime $createdAt;
-    private \DateTime $updatedAt;
+    private \DateTime|null $updatedAt;
     private int $elapsedTime = 0;
 
     public function __construct(string $title = '', string $description = '')
@@ -18,6 +18,7 @@ class Task
         $this->title = $title;
         $this->description = $description;
         $this->createdAt = new \DateTime();
+        $this->updatedAt = null;
     }
 
     public function getId(): int
@@ -60,12 +61,12 @@ class Task
         $this->createdAt = $createdAt;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): \DateTime|null
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt): void
+    public function setUpdatedAt(\DateTime|null $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

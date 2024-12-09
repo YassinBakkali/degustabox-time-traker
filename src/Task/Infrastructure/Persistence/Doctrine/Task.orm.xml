@@ -11,7 +11,7 @@
         <field name="title" type="string"/>
         <field name="description" type="string"/>
         <field name="createdAt" type="datetime"/>
-        <field name="updatedAt" type="datetime"/>
+        <field name="updatedAt" type="datetime" nullable="true"/>
         <field name="elapsedTime" type="integer"/>
     </entity>
 
