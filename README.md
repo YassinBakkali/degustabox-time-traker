@@ -25,7 +25,7 @@ git clone https://github.com/YassinBakkali/degustabox-time-traker.git
 ```
 Clona el proyecto de Docker
 ```
-git clone https://github.com/YassinBakkali/degustabox-time-traker.git
+git clone https://github.com/YassinBakkali/degustabox-time-traker-docker.git
 
 ```
 ### 2. Instalar dependencias del proyecto Symfony
