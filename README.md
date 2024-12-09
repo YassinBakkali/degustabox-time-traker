@@ -63,6 +63,6 @@ php bin/console doctrine:migrations:migrate
 
 Una vez que la base de datos se haya migrado, podrás acceder a la aplicación en tu navegador
 ```
-http://localhost:8000/tasks
+http://localhost:8080/tasks
 
 ```
